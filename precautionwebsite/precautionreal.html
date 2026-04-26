@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aman UAE | Safety Portal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            /* GLOBAL GREEN VIBE */
+            --primary-dark: #004445; /* Deep Forest */
+            --primary-med: #218c74;  /* Trustworthy Teal/Green */
+            --safe-green: #26de81;   /* Vibrant Action Green */
+            --bg-light: #f7f9fb;
+            --white: #ffffff;
+            
+            /* EMERGENCY ACCENTS (Kept for importance) */
+            --alert-red: #eb4d4b;
+            --warning-orange: #f0932b;
+            
+            /* TEXT & SHADOWS */
+            --text-main: #2d3436;
+            --text-muted: #636e72;
+            --card-shadow: 0 10px 30px rgba(0, 68, 69, 0.1);
+            
+            /* GRADIENTS */
+            --gradient-header: linear-gradient(135deg, #004445 0%, #2c3e50 100%);
+            --gradient-hero: linear-gradient(135deg, #218c74 0%, #004445 100%);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: var(--bg-light); color: var(--text-main); line-height: 1.6; }
+
+        /* HEADER & NAVIGATION */
+        header { 
+            background: var(--gradient-header); 
+            text-align: center; 
+            padding: 50px 0 40px; 
+            border-bottom: 5px solid var(--safe-green);
+        }
+        .logo { font-size: 2.8rem; font-weight: 900; color: white; letter-spacing: 6px; }
+        header p { color: var(--safe-green); font-weight: 600; margin-top: 10px; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px; }
+
+        nav { 
+            background: var(--white); 
+            display: flex; 
+            justify-content: center; 
+            padding: 10px; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05); 
+            gap: 15px; 
+        }
+        .nav-btn { 
+            padding: 12px 24px; 
+            border: 2px solid transparent; 
+            background: none; 
+            font-weight: 700; 
+            cursor: pointer; 
+            color: var(--primary-dark); 
+            border-radius: 30px;
+            transition: all 0.3s ease; 
+        }
+        .nav-btn:hover { background: #eefaf6; color: var(--primary-med); }
+        .nav-btn.active { color: var(--white); background: var(--primary-med); border-color: var(--primary-med); }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+
+        .view { display: none; padding-bottom: 50px; animation: fadeIn 0.6s ease; }
+        .view.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* HERO SECTION */
+        .hero-container { 
+            background: var(--gradient-hero); 
+            color: white; 
+            text-align: center; 
+            padding: 80px 20px 120px; 
+            clip-path: ellipse(150% 100% at 50% 0%); 
+        }
+        .hero-container h1 { font-size: 3rem; font-weight: 800; margin-bottom: 15px; }
+        .hero-container p { font-size: 1.3rem; opacity: 0.95; font-weight: 300; }
+
+        /* CARDS & GRID */
+        .info-card { 
+            background: var(--white); 
+            padding: 30px; 
+            border-radius: 20px; 
+            box-shadow: var(--card-shadow); 
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(33, 140, 116, 0.1);
+            margin-bottom: 20px;
+        }
+        .info-card:hover { transform: translateY(-8px); border-color: var(--safe-green); }
+
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: -60px; } 
+
+        .step-circle { 
+            width: 50px; height: 50px; 
+            background: var(--primary-med); 
+            color: white; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            margin-bottom: 20px; font-weight: bold; font-size: 1.3rem;
+        }
+
+        /* EMERGENCY ELEMENTS (RED/ORANGE) */
+        .warning-banner { 
+            background: var(--alert-red); 
+            color: white; padding: 30px; border-radius: 20px; 
+            display: flex; align-items: center; gap: 25px; 
+            margin: 50px 0; box-shadow: 0 10px 20px rgba(235, 77, 75, 0.3);
+        }
+
+        .myth-fact { 
+            background: #fff5f5; 
+            border-radius: 15px; padding: 25px; margin-top: 20px; 
+            border-left: 8px solid var(--warning-orange); 
+        }
+
+        /* CHECKLIST */
+        .status-banner { 
+            text-align: center; padding: 40px; border-radius: 30px; 
+            background: var(--white); margin-bottom: 30px; 
+            border: 2px solid var(--primary-med);
+        }
+        .progress-container { background: #ecf0f1; height: 25px; border-radius: 20px; margin: 25px 0; overflow: hidden; }
+        #progress-fill { 
+            background: linear-gradient(90deg, var(--primary-med), var(--safe-green)); 
+            width: 0%; height: 100%; transition: width 0.5s ease; 
+        }
+        
+        .checklist-item { 
+            background: white; padding: 20px; margin-bottom: 15px; border-radius: 15px; 
+            display: flex; align-items: center; gap: 15px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            border: 1px solid transparent;
+        }
+        .checklist-item:has(input:checked) { border-color: var(--safe-green); background: #f0fff9; }
+
+        /* ABOUT */
+        .member-card { 
+            background: white; padding: 30px; border-radius: 25px; 
+            text-align: center; border-top: 8px solid var(--primary-med); 
+            box-shadow: var(--card-shadow);
+        }
+        .profile-pic { 
+            width: 120px; height: 120px; border-radius: 50%; 
+            object-fit: cover; margin-bottom: 20px; 
+            border: 5px solid #f1f2f6; 
+        }
+        
+        .source-link { 
+            display: block; padding: 15px; 
+            background: #f1fcf8; border-radius: 12px; 
+            margin-top: 15px; text-decoration: none; 
+            color: var(--primary-dark); font-weight: bold; 
+            transition: 0.3s; border: 1px solid var(--primary-med);
+        }
+        .source-link:hover { background: var(--primary-med); color: white; }
+
+        footer { 
+            text-align: center; padding: 60px; color: var(--white); 
+            background: var(--primary-dark); margin-top: 50px;
+        }
+
+        input[type="checkbox"] {
+            width: 22px; height: 22px; cursor: pointer; accent-color: var(--primary-med);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">AMANA</div>
+    <p>National Emergency Awareness Portal</p>
+</header>
+
+<nav>
+    <button class="nav-btn active" onclick="showView('home', this)">Home Guide</button>
+    <button class="nav-btn" onclick="showView('checklist', this)">Precaution Checklist</button>
+    <button class="nav-btn" onclick="showView('about', this)">About Us</button>
+</nav>
+
+<div id="home" class="view active">
+    <section class="hero-container">
+        <h1>Preparedness is Peace of Mind</h1>
+        <p>Providing clear, reliable guidance for the UAE community.</p>
+    </section>
+
+    <div class="container">
+        <h2 style="margin: -30px 0 60px; text-align: center; font-weight: 800; color: var(--primary-dark);">How to Respond</h2>
+        <div class="grid-3">
+            <div class="info-card">
+                <div class="step-circle">1</div>
+                <h3 style="color: var(--primary-med);">Listen</h3>
+                <p>When the alert sounds on your phone, stay calm and listen to the instructions provided by NCEMA.</p>
+            </div>
+            <div class="info-card">
+                <div class="step-circle">2</div>
+                <h3 style="color: var(--primary-med);">Locate</h3>
+                <p>Immediately move to your pre-selected safe room. Stay away from glass and balconies.</p>
+            </div>
+            <div class="info-card">
+                <div class="step-circle">3</div>
+                <h3 style="color: var(--primary-med);">Liaise</h3>
+                <p>Wait for the "All Clear" before leaving. Check on family via SMS to keep phone lines open.</p>
+            </div>
+        </div>
+
+        <div class="warning-banner">
+            <i class="fas fa-video-slash fa-3x"></i>
+            <div>
+                <strong style="font-size: 1.4rem; text-transform: uppercase;">Strict Policy: No Recording</strong>
+                <p>Filming missile interceptions is illegal. It exposes defense locations and puts you at risk of falling debris.</p>
+            </div>
+        </div>
+
+        <div class="grid-3" style="margin-top: 20px;">
+            <div class="info-card">
+                <h3 style="color: var(--primary-med);">🏠 Identifying Safe Zones</h3>
+                <ul style="padding-left: 20px; margin-top: 15px;">
+                    <li>Interior hallways with no windows.</li>
+                    <li>Underground basements.</li>
+                    <li>Rooms with multiple walls between you and the outside.</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3 style="color: var(--primary-med);">📡 Official Sources</h3>
+                <a href="#" class="source-link">NCEMA Official X (Twitter)</a>
+                <a href="#" class="source-link">UAE Ministry of Interior</a>
+            </div>
+        </div>
+
+        <div class="info-card" style="margin-top: 40px;">
+            <h3 style="color: var(--warning-orange);">💡 Myth vs. Fact</h3>
+            <div class="myth-fact">
+                <p style="color: var(--alert-red); font-weight: bold; font-size: 1.1rem;">Myth: "I should hide in my car to drive away."</p>
+                <p style="color: var(--primary-dark); margin-top: 8px;"><strong>Fact:</strong> Cars are not safe shelters. Stay inside a sturdy building until the all-clear is given.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="checklist" class="view">
+    <div class="container">
+        <div class="status-banner">
+            <h2 id="status-text" style="color: var(--primary-med); margin-bottom: 10px;">Let's start preparing</h2>
+            <div class="progress-container">
+                <div id="progress-fill"></div>
+            </div>
+            <p style="font-size: 1.3rem;"><strong>Readiness Score: <span id="percent" style="color: var(--primary-med);">0</span>%</strong></p>
+        </div>
+
+        <div style="max-width: 750px; margin: 0 auto;">
+            <div class="checklist-item"><input type="checkbox" class="task"> <span>3 Liters of water per person</span></div>
+            <div class="checklist-item"><input type="checkbox" class="task"> <span>3-day supply of canned food</span></div>
+            <div class="checklist-item"><input type="checkbox" class="task"> <span>Manual can opener</span></div>
+            <div class="checklist-item"><input type="checkbox" class="task"> <span>First Aid Kit & medications</span></div>
+            <div class="checklist-item"><input type="checkbox" class="task"> <span>Battery-powered radio</span></div>
+            <div class="checklist-item"><input type="checkbox" class="task"> <span>Flashlight + extra batteries</span></div>
+            <div class="checklist-item"><input type="checkbox" class="task"> <span>High-capacity Power Bank</span></div>
+            <div class="checklist-item"><input type="checkbox" class="task"> <span>Physical copies of IDs</span></div>
+            <div class="checklist-item"><input type="checkbox" class="task"> <span>Emergency Whistle</span></div>
+            <div class="checklist-item"><input type="checkbox" class="task"> <span>Spare Masks & Sanitizer</span></div>
+        </div>
+    </div>
+</div>
+
+<div id="about" class="view">
+    <div class="container">
+        <div class="info-card" style="text-align: center; margin-bottom: 50px; border-bottom: 5px solid var(--safe-green);">
+            <h2 style="font-size: 2.2rem; color: var(--primary-dark);">Our Mission</h2>
+            <p style="margin-top: 15px; font-size: 1.1rem; color: var(--text-muted);">We are Grade 12 students from Model Private School dedicated to empowering the UAE community with life-saving knowledge.</p>
+        </div>
+
+        <div class="grid-3" style="margin-top: 0;">
+            <div class="member-card">
+                <img src="MEnewuni.jpeg" class="profile-pic" alt="Nazwin">
+                <h3 style="color: var(--primary-dark);">Nazwin</h3>
+                <p style="color: var(--primary-med); font-weight: 600;">nazwin.official@gmail.com</p>
+            </div>
+            <div class="member-card">
+                <img src="janfi.jpeg" class="profile-pic" alt="Nazwin">
+                <h3 style="color: var(--primary-dark);">Janfi</h3>
+                <p style="color: var(--primary-med); font-weight: 600;">janfishanjinan@gmail.com</p>
+            </div>
+            <div class="member-card">
+                <i class="fas fa-user-shield fa-5x" style="color: #d1d8e0; margin-bottom: 20px; display: block;"></i>
+                <h3 style="color: var(--primary-dark);">Naseeh</h3>
+                <p style="color: var(--primary-med); font-weight: 600;">DEAD WEIGHT. USELESS AAAHH</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p style="font-weight: 800; font-size: 1.2rem; letter-spacing: 2px;">AMANA</p>
+    <p style="margin: 10px 0;">National Emergency Awareness Portal</p>
+    <p style="opacity: 0.6; font-size: 0.8rem;">© 2026 Model Private School - Grade 12-C initiative</p>
+</footer>
+
+<script>
+    function showView(viewId, btn) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(viewId).classList.add('active');
+        btn.classList.add('active');
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    const checkboxes = document.querySelectorAll('.task');
+    const progressFill = document.getElementById('progress-fill');
+    const percentLabel = document.getElementById('percent');
+    const statusText = document.getElementById('status-text');
+
+    checkboxes.forEach(box => {
+        box.addEventListener('change', () => {
+            const checked = document.querySelectorAll('.task:checked').length;
+            const percentage = (checked / checkboxes.length) * 100;
+            progressFill.style.width = percentage + "%";
+            percentLabel.innerText = Math.round(percentage);
+
+            if (percentage === 100) {
+                statusText.innerText = "FULLY PREPARED! ✨";
+                statusText.style.color = "var(--safe-green)";
+            } else if (percentage > 50) {
+                statusText.innerText = "Good progress!";
+                statusText.style.color = "var(--primary-med)";
+            } else if (percentage > 0) {
+                statusText.innerText = "Improving Readiness...";
+                statusText.style.color = "var(--warning-orange)";
+            } else {
+                statusText.innerText = "Let's start preparing";
+                statusText.style.color = "var(--primary-med)";
+            }
+        });
+    });
+</script>
+</body>
+</html>
